@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Form</title>
+</head>
+<body>
+    <form id="emailForm" action="../php/test_2.php" method="post">
+        <label for="recipient">收件人：</label>
+        <input type="email" id="recipient" name="recipient" required><br>
+
+        <label for="subject">主题：</label>
+        <input type="text" id="subject" name="subject" required><br>
+
+        <label for="message">消息：</label>
+        <textarea id="message" name="message" rows="4" required></textarea><br>
+
+        <input type="submit" value="发送邮件">
+    </form>
+
+    <script>
+        document.getElementById("emailForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // 阻止表单默认提交
+
+            // 获取表单数据
+            var recipient = document.getElementById("recipient").value;
+            var subject = document.getElementById("subject").value;
+            var message = document.getElementById("message").value;
+
+            // 使用AJAX发送数据到服务器
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "send_email.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // 处理服务器的响应，例如显示成功消息
+                    alert(xhr.responseText);
+                }
+            };
+
+            // 构建要发送的数据
+            var data = "recipient=" + encodeURIComponent(recipient) +
+                       "&subject=" + encodeURIComponent(subject) +
+                       "&message=" + encodeURIComponent(message);
+
+            // 发送数据
+            xhr.send(data);
+        });
+    </script>
+</body>
+</html>

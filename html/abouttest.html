@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>個人資料</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/aboutus.css">
+</head>
+<body>
+    <link rel="stylesheet" type="text/css" href="../css/index.css">
+    <div class="top-bar">
+        <div class="logo">Your Logo</div>
+        <div class="navigation">
+            <button onclick="changePage(1)">首頁</button>
+            <button onclick="changePage(2)">探索活動</button>
+            <button onclick="changePage(3)">個人資訊</button>
+            <button onclick="changePage(4)">關於我們</button>
+        </div>
+        <div class="user-options" id="userOptions">
+            <!-- JavaScript 將在此處動態添加登入或登出按鈕 -->
+        </div>
+    </div>
+    <div class="content" id="pageContent">
+        <!-- Your page content goes here -->
+        <p>No data please login</p>
+    </div>
+    
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <!-- Login form goes here -->
+            <h2>Login</h2>
+            <form id="loginForm">
+                <!-- Add your login form fields here -->
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required><br>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required><br>
+
+                <input type="submit" value="Login">
+            </form>
+        </div>
+    </div>
+    
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeRegisterModal()">&times;</span>
+            <!-- Register form goes here -->
+            <h2>Register</h2>
+            <!-- Add your register form fields here -->
+        </div>
+    </div>
+    
+    <script src="../JavaScript/index.js"></script>
+    <script>
+        // 檢查用戶是否已登入，並動態添加登入或登出按鈕
+        function checkLoginStatus() {
+            var userOptions = document.getElementById("userOptions");
+            var pageContent = document.getElementById("pageContent");
+
+            // 此處應該向後端發送請求檢查登入狀態，這裡只是一個示例
+            var isLoggedIn = false;
+
+            if (isLoggedIn) {
+                // 用戶已登入，顯示登出按鈕
+                userOptions.innerHTML = '<button onclick="logout()">Logout</button>';
+                // 顯示用戶個人資訊或其他內容
+                pageContent.innerHTML = '<p>Welcome, [Username]!</p>';
+            } else {
+                // 用戶未登入，顯示登入按鈕
+                userOptions.innerHTML = '<button onclick="openLoginModal()">Login</button>';
+                // 顯示登入後的頁面內容
+                pageContent.innerHTML = '<p>No data please login</p>';
+            }
+        }
+
+        // 示例登出函數
+        function logout() {
+            // 此處應該向後端發送登出請求，清除會話等，這裡只是一個示例
+            alert("Logout");
+            // 重新檢查登入狀態
+            checkLoginStatus();
+        }
+
+        // 初始化頁面時檢查登入狀態
+        checkLoginStatus();
+    </script>
+</body>
+</html>
